@@ -41,6 +41,8 @@
 		3FBA77181A2CEAA200C97CB4 /* B22_taskbar__add-icon-outline.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FBA77161A2CEAA200C97CB4 /* B22_taskbar__add-icon-outline.png */; };
 		3FBA77191A2CEAA200C97CB4 /* B22_taskbar__add-icon-outline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FBA77171A2CEAA200C97CB4 /* B22_taskbar__add-icon-outline@2x.png */; };
 		3FBA771D1A2CEB9100C97CB4 /* EventStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FBA771C1A2CEB9100C97CB4 /* EventStore.m */; };
+		3FBA77201A2E146800C97CB4 /* EPCalendarMonthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FBA771F1A2E146800C97CB4 /* EPCalendarMonthViewController.m */; };
+		3FBA77221A2E2A8800C97CB4 /* EPCalendarMonthViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FBA77211A2E2A8800C97CB4 /* EPCalendarMonthViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +120,9 @@
 		3FBA77171A2CEAA200C97CB4 /* B22_taskbar__add-icon-outline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "B22_taskbar__add-icon-outline@2x.png"; sourceTree = "<group>"; };
 		3FBA771B1A2CEB9100C97CB4 /* EventStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventStore.h; sourceTree = "<group>"; };
 		3FBA771C1A2CEB9100C97CB4 /* EventStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventStore.m; sourceTree = "<group>"; };
+		3FBA771E1A2E146800C97CB4 /* EPCalendarMonthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPCalendarMonthViewController.h; sourceTree = "<group>"; };
+		3FBA771F1A2E146800C97CB4 /* EPCalendarMonthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EPCalendarMonthViewController.m; sourceTree = "<group>"; };
+		3FBA77211A2E2A8800C97CB4 /* EPCalendarMonthViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EPCalendarMonthViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -248,6 +253,9 @@
 				3FBA76DD1A2CD1E500C97CB4 /* EPCalendarViewController.m */,
 				3FBA76DE1A2CD1E500C97CB4 /* EPCalendarView.h */,
 				3FBA76DF1A2CD1E500C97CB4 /* EPCalendarView.m */,
+				3FBA771E1A2E146800C97CB4 /* EPCalendarMonthViewController.h */,
+				3FBA771F1A2E146800C97CB4 /* EPCalendarMonthViewController.m */,
+				3FBA77211A2E2A8800C97CB4 /* EPCalendarMonthViewController.xib */,
 				3FBA76E01A2CD1E500C97CB4 /* EPCreateEventTableViewController.h */,
 				3FBA76E11A2CD1E500C97CB4 /* EPCreateEventTableViewController.m */,
 				3FBA76E21A2CD1E500C97CB4 /* EPInlineDatePickerTableViewContorller.m */,
@@ -369,6 +377,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FBA770B1A2CDF7900C97CB4 /* EPTextViewCell.xib in Resources */,
+				3FBA77221A2E2A8800C97CB4 /* EPCalendarMonthViewController.xib in Resources */,
 				3FBA77181A2CEAA200C97CB4 /* B22_taskbar__add-icon-outline.png in Resources */,
 				3FBA77151A2CE44D00C97CB4 /* BlueDot@2x.png in Resources */,
 				3FBA77031A2CDE8900C97CB4 /* EPDatePickerCell.xib in Resources */,
@@ -405,6 +414,7 @@
 				3FBA76EA1A2CD1E500C97CB4 /* NSDate+Format.m in Sources */,
 				3FBA77111A2CE02D00C97CB4 /* NSString+EH.m in Sources */,
 				3FBA76EC1A2CD1E500C97CB4 /* EPCalendarCell.m in Sources */,
+				3FBA77201A2E146800C97CB4 /* EPCalendarMonthViewController.m in Sources */,
 				3FBA76E81A2CD1E500C97CB4 /* NSCalendar+Ranges.m in Sources */,
 				3FBA76EE1A2CD1E500C97CB4 /* EPCalendarCollectionView.m in Sources */,
 				3FBA76EB1A2CD1E500C97CB4 /* NSString+Color.m in Sources */,
@@ -600,6 +610,7 @@
 				3FBA76BE1A2CCC5000C97CB4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3FBA76BF1A2CCC5000C97CB4 /* Build configuration list for PBXNativeTarget "CRMCalendarTests" */ = {
 			isa = XCConfigurationList;
@@ -608,6 +619,7 @@
 				3FBA76C11A2CCC5000C97CB4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

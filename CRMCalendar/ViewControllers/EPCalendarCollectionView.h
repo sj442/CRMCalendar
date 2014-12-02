@@ -21,5 +21,6 @@
 
 @property (weak, nonatomic) id <EPCalendarCollectionViewDelegate> myDelegate;
 @property (assign) BOOL monthMode;
+@property NSInteger scrollViewIndex;
 
 @end

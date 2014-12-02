@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "EPCalendarViewController.h"
+#import "EPCalendarMonthViewController.h"
 
 @interface AppDelegate ()
 
@@ -20,8 +21,9 @@
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
-    EPCalendarViewController *calendar = [[EPCalendarViewController alloc] init];
-    UINavigationController *navC = [[UINavigationController alloc]initWithRootViewController:calendar];
+   // EPCalendarViewController *calendar = [[EPCalendarViewController alloc] init];
+    EPCalendarMonthViewController *monthVC = [[EPCalendarMonthViewController alloc]init];
+    UINavigationController *navC = [[UINavigationController alloc]initWithRootViewController:monthVC];
     self.window.rootViewController = navC;
     [self.window makeKeyAndVisible];
 

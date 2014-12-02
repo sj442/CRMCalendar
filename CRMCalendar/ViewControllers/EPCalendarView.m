@@ -25,6 +25,7 @@
 }
 @property (strong, nonatomic) NSArray *dayEvents;
 @property (strong, nonatomic) NSDate *today;
+@property CGFloat lastContentOffset;
 
 @property (weak, nonatomic) UIScrollView *scrollView;
 
@@ -61,26 +62,44 @@
 
 - (void)setUpCollectionView
 {
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    EPCalendarCollectionView *collectionView = [[EPCalendarCollectionView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), [self cellSize].height) collectionViewLayout:flowLayout];
-    collectionView.myDelegate = self;
-    [self addSubview:collectionView];
-    [flowLayout setItemSize:[self cellSize]];
-    [flowLayout setMinimumLineSpacing:1];
-    [flowLayout setMinimumInteritemSpacing:1];
-    self.collectionView = collectionView;
-    self.collectionView.dataSource = self;
-    self.collectionView.delegate = self;
-    UINib *nib = [UINib nibWithNibName:@"EPCalendarCell" bundle:nil];
-    [self.collectionView registerNib:nib forCellWithReuseIdentifier:@"CalendarCell"];
-    self.collectionView.backgroundColor = [UIColor whiteColor];
-    self.collectionView.scrollEnabled = NO;
+    //setting up week collection view
+    UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
+    [self addSubview:scrollView];
+    self.scrollView = scrollView;
+    self.scrollView.scrollEnabled = YES;
+    self.scrollView.delegate = self;
+    NSInteger numberOfSubViews = 3;
+    self.scrollView.contentSize = CGSizeMake(self.frame.size.width * numberOfSubViews, self.frame.size.height);
+    for (int i=0; i<numberOfSubViews; i++) {
+        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+        flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
+        EPCalendarCollectionView *collectionView = [[EPCalendarCollectionView alloc] initWithFrame:CGRectMake((i-1)*CGRectGetWidth(self.frame), 0, CGRectGetWidth(self.frame), [self cellSize].height) collectionViewLayout:flowLayout];
+        collectionView.myDelegate = self;
+        collectionView.scrollViewIndex = i;
+        [self.scrollView addSubview:collectionView];
+        [flowLayout setItemSize:[self cellSize]];
+        [flowLayout setMinimumLineSpacing:1];
+        [flowLayout setMinimumInteritemSpacing:1];
+        collectionView.dataSource = self;
+        collectionView.delegate = self;
+        UINib *nib = [UINib nibWithNibName:@"EPCalendarCell" bundle:nil];
+        [collectionView registerNib:nib forCellWithReuseIdentifier:@"CalendarCell"];
+        collectionView.backgroundColor = [UIColor whiteColor];
+        collectionView.scrollEnabled = NO;
+        if (i==0) {
+            self.collectionViewLeft = collectionView;
+        } else if (i==1) {
+            self.collectionViewMiddle = collectionView;
+        } else if (i==2) {
+            self.collectionViewRight = collectionView;
+        }
+        [self.scrollView setContentInset:UIEdgeInsetsMake(0, 320, 0, 0)];
+    }
 }
 
 - (void)setUpTableView
 {
-    EPCalendarTableView *tableView = [[EPCalendarTableView alloc]initWithFrame:CGRectMake(0, CGRectGetHeight(self.collectionView.frame), CGRectGetWidth(self.frame), CGRectGetHeight(self.frame)-CGRectGetHeight(self.collectionView.frame))];
+    EPCalendarTableView *tableView = [[EPCalendarTableView alloc]initWithFrame:CGRectMake(0, CGRectGetHeight(self.collectionViewLeft.frame), CGRectGetWidth(self.frame), CGRectGetHeight(self.frame)-CGRectGetHeight(self.collectionViewLeft.frame))];
     [self addSubview:tableView];
     self.tableView = tableView;
     self.tableView.myDelegate = self;
@@ -90,30 +109,33 @@
 
 - (void)layoutSubviewForMonth
 {
-    self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
-    self.tableView.frame = CGRectMake(0, CGRectGetHeight(self.collectionView.frame), CGRectGetWidth(self.frame), CGRectGetHeight(self.frame)-CGRectGetHeight(self.collectionView.frame));
-    self.collectionView.scrollEnabled = YES;
-    [self.collectionView reloadData];
+    self.collectionViewLeft.frame = CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
+    self.collectionViewMiddle.frame = CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
+    self.collectionViewRight.frame = CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
+    self.tableView.frame = CGRectMake(0, CGRectGetHeight(self.collectionViewLeft.frame), CGRectGetWidth(self.frame), CGRectGetHeight(self.frame)-CGRectGetHeight(self.collectionViewLeft.frame));
+    [self.collectionViewLeft reloadData];
+    [self.collectionViewMiddle reloadData];
+    [self.collectionViewRight reloadData];
 }
 
 - (void)layoutSubviewsForWeek
 {
-    self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.frame), [self cellSize].height);
-    self.tableView.frame = CGRectMake(0, CGRectGetHeight(self.collectionView.frame), CGRectGetWidth(self.frame), CGRectGetHeight(self.frame)-CGRectGetHeight(self.collectionView.frame));
-    self.collectionView.scrollEnabled = NO;
+    self.collectionViewLeft.frame = CGRectMake(0, 0, CGRectGetWidth(self.frame), [self cellSize].height);
+    self.tableView.frame = CGRectMake(0, CGRectGetHeight(self.collectionViewLeft.frame), CGRectGetWidth(self.frame), CGRectGetHeight(self.frame)-CGRectGetHeight(self.collectionViewLeft.frame));
+    self.collectionViewLeft.scrollEnabled = NO;
     [self calendarViewReload];
 }
 
 - (void)layoutSubviewForDay
 {
     self.tableView.frame = CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
-    self.collectionView.frame = CGRectMake(0, CGRectGetHeight(self.tableView.frame), CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - CGRectGetHeight(self.tableView.frame));
+    self.collectionViewLeft.frame = CGRectMake(0, CGRectGetHeight(self.tableView.frame), CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - CGRectGetHeight(self.tableView.frame));
     [self calendarViewReload];
 }
 
 - (void)calendarViewReload
 {
-    [self.collectionView reloadData];
+    [self.collectionViewLeft reloadData];
     [self.tableView reloadData];
 }
 
@@ -316,10 +338,10 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    EPCalendarCell *cell= (EPCalendarCell*)[self.collectionView cellForItemAtIndexPath:indexPath];
+    EPCalendarCell *cell= (EPCalendarCell*)[self.collectionViewLeft cellForItemAtIndexPath:indexPath];
     NSDate *indexDate = ((EPCalendarCell*)cell).indexDate;
     if (!indexDate){
-        [self.collectionView deselectItemAtIndexPath:indexPath animated:NO];
+        [self.collectionViewLeft deselectItemAtIndexPath:indexPath animated:NO];
     }
     else {
         self.date = indexDate;
@@ -463,7 +485,7 @@
     NSDate *newDate = [NSDate createDateFromComponentsYear:year andMonth:month+1 andDay:1 ForCalendar:self.calendar];
     self.date = newDate;
     [self.swipeDelegate newDateToPassBack:newDate];
-    [self.collectionView reloadData];
+    [self.collectionViewLeft reloadData];
 }
 
 - (void)downSwipeHappened
@@ -473,7 +495,7 @@
     NSDate *newDate = [NSDate createDateFromComponentsYear:year andMonth:month-1 andDay:1 ForCalendar:self.calendar];
     self.date = newDate;
     [self.swipeDelegate newDateToPassBack:newDate];
-    [self.collectionView reloadData];
+    [self.collectionViewLeft reloadData];
 }
 
 - (void)leftSwipeHappended
@@ -524,7 +546,6 @@
 - (void)setupEventStore
 {
     self.eventStore =[[EventStore sharedInstance] eventStore];
-    
     //For observing external changes to Calendar Database
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(eventStoreChanged:)
@@ -545,5 +566,49 @@
     [self calendarViewReload];
 }
 
+#pragma mark - UIScrollViewDelegate 
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView.contentOffset.x>320 || scrollView.contentOffset.x<-320 ) {
+        [scrollView setContentOffset:CGPointMake(0, 0)];
+    }
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    self.lastContentOffset = scrollView.contentOffset.x;
+}
+
+-(void) scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
+{
+    if (self.lastContentOffset < scrollView.contentOffset.x) {
+        //moved right
+        NSLog(@"moved right");
+    } else if (self.lastContentOffset> scrollView.contentOffset.x) {
+        //moved left
+        NSLog(@"moved left");
+    }
+}
+
+- (void)goBackOneWeek
+{
+    
+}
+
+- (void)goForwardOneWeek
+{
+    
+}
+
+- (void)goBackOneMonth
+{
+    
+}
+
+- (void)goForwardOneMonth
+{
+    
+}
 
 @end

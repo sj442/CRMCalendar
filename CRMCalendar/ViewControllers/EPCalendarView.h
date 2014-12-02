@@ -29,10 +29,12 @@
 
 @end
 
-@interface EPCalendarView : UIView <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, EPCalendarCollectionViewDelegate, EPCalendarTableViewDelegate>
+@interface EPCalendarView : UIView <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, EPCalendarCollectionViewDelegate, EPCalendarTableViewDelegate, UIScrollViewDelegate>
 
 @property (weak, nonatomic) EPCalendarTableView *tableView;
-@property (weak, nonatomic) EPCalendarCollectionView *collectionView;
+@property (weak, nonatomic) EPCalendarCollectionView *collectionViewLeft;
+@property (weak, nonatomic) EPCalendarCollectionView *collectionViewMiddle;
+@property (weak, nonatomic) EPCalendarCollectionView *collectionViewRight;
 
 @property (weak, nonatomic) id<EPCalendarViewSwipeDelegate> swipeDelegate;
 @property (weak, nonatomic) id<CalendarViewDelegate> calendarViewDelegate;
