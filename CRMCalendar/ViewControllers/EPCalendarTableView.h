@@ -10,8 +10,10 @@
 
 @protocol EPCalendarTableViewDelegate <NSObject>
 
--(void)rightSwipeHappened;
--(void)leftSwipeHappended;
+- (void)tableViewRightSwipeHappened;
+- (void)tableViewLeftSwipeHappened;
+- (void)tableViewUpSwipeHappened;
+- (void)tableViewDownSwipeHappened;
 
 @end
 

@@ -28,6 +28,8 @@ NSInteger todayYear;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @property (strong, nonatomic) NSDate *today;
+@property CGFloat lastContentOffset;
+@property BOOL didSwipeRight;
 
 @end
 
@@ -399,6 +401,31 @@ NSInteger todayYear;
 
 - (void) scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    NSLog(@"content offset %f", scrollView.contentOffset.x);
+    if (scrollView.contentOffset.x>self.lastContentOffset) {
+        NSLog(@"swipe left");
+        self.didSwipeRight = NO;
+        [self resetCollectionViewToNextMonths];
+    } else {
+        NSLog(@"swipe right");
+        self.didSwipeRight = YES;
+        [self resetCollectionViewToPreviousMonths];
+    }
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    self.lastContentOffset = scrollView.contentOffset.x;
+}
+
+- (void)resetCollectionViewToNextMonths
+{
+    
+}
+
+- (void)resetCollectionViewToPreviousMonths
+{
+    
 }
 
 

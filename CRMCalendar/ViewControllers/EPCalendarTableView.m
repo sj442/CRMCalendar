@@ -8,7 +8,7 @@
 
 #import "EPCalendarTableView.h"
 
-static CGFloat EPCalendarTableViewMinimumDetectDistance = 20;
+static CGFloat EPCalendarTableViewMinimumDetectDistance = 10;
 
 @interface EPCalendarTableView ()
 
@@ -44,13 +44,22 @@ static CGFloat EPCalendarTableViewMinimumDetectDistance = 20;
     [super touchesEnded:touches withEvent:event];
     UITouch *touch = [touches anyObject];
     CGPoint endPoint = [touch locationInView:self];
-    CGFloat moveX = endPoint.x - self.initialPosition.x;
-    if (moveX>EPCalendarTableViewMinimumDetectDistance) {
-        //right swipe
-        [self.myDelegate rightSwipeHappened];
-    } else if (moveX<-EPCalendarTableViewMinimumDetectDistance) {
-        //left swipe
-        [self.myDelegate leftSwipeHappended];
+//  CGFloat moveX = endPoint.x - self.initialPosition.x;
+    CGFloat moveY = endPoint.y - self.initialPosition.y;
+
+//    if (moveX>EPCalendarTableViewMinimumDetectDistance) {
+//        //right swipe
+//        [self.myDelegate tableViewRightSwipeHappened];
+//    } else if (moveX<-EPCalendarTableViewMinimumDetectDistance) {
+//        //left swipe
+//        [self.myDelegate tableViewLeftSwipeHappened];
+//    } else
+    if (moveY> EPCalendarTableViewMinimumDetectDistance) {
+        //down swipe
+        [self.myDelegate tableViewDownSwipeHappened];
+    } else if (moveY<-EPCalendarTableViewMinimumDetectDistance) {
+        //up swipe
+        [self.myDelegate tableViewUpSwipeHappened];
     }
 }
 
