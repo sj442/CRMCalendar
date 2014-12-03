@@ -16,16 +16,16 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="dAp-6t-P26">
-                    <rect key="frame" x="-320" y="65" width="960" height="100"/>
+                    <rect key="frame" x="-320" y="65" width="960" height="130"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="960" id="68D-go-8Bt"/>
-                        <constraint firstAttribute="height" constant="100" id="TbR-X2-jow"/>
+                        <constraint firstAttribute="height" constant="130" id="a7y-cd-SLH"/>
+                        <constraint firstAttribute="width" constant="960" id="f2v-3U-WJM"/>
                     </constraints>
-                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="1" minimumInteritemSpacing="1" id="aeJ-eI-SPU">
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="aeJ-eI-SPU">
                         <size key="itemSize" width="50" height="80"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                        <inset key="sectionInset" minX="2" minY="2" maxX="2" maxY="2"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="K9l-Fz-PKb"/>
@@ -35,8 +35,8 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="dAp-6t-P26" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="-320" id="3JU-Gc-eQO"/>
-                <constraint firstItem="dAp-6t-P26" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="65" id="Gb2-Sn-0uH"/>
+                <constraint firstItem="dAp-6t-P26" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="65" id="ItI-Za-w1p"/>
+                <constraint firstItem="dAp-6t-P26" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="-320" id="WFE-xu-NKY"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>

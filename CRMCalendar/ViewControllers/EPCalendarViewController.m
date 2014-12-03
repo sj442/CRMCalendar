@@ -223,7 +223,7 @@
 {
     self.displayMode = CKCalendarViewModeMonth;
     self.calendarView.displayMode = CKCalendarViewModeMonth;
-    self.calendarView.collectionView.monthMode = YES;
+    self.calendarView.collectionViewLeft.monthMode = YES;
     [self.calendarView layoutSubviewForMonth];
     
     [self changeHeaderView];
@@ -234,7 +234,7 @@
     self.displayMode = CKCalendarViewModeWeek;
     
     self.calendarView.displayMode = CKCalendarViewModeWeek;
-    self.calendarView.collectionView.monthMode = NO;
+    self.calendarView.collectionViewLeft.monthMode = NO;
     [self.calendarView layoutSubviewsForWeek];
     [self changeHeaderView];
 }

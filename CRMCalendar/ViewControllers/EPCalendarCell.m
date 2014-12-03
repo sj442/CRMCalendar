@@ -7,6 +7,7 @@
 //
 
 #import "EPCalendarCell.h"
+#import "UIColor+EH.h"
 
 @implementation EPCalendarCell
 
@@ -23,6 +24,9 @@
 {
     self.backgroundColor = [UIColor whiteColor];
     self.dotImageView.hidden = YES;
+    self.dayLabel.backgroundColor = [UIColor primaryColor];
+    self.dayLabel.font =[UIFont boldSystemFontOfSize:19];
+    self.dayLabel.textColor = [UIColor whiteColor];
     self.dateLabel.backgroundColor = [UIColor clearColor];
     self.dateLabel.textColor = [UIColor blackColor];
     self.dateLabel.font = [UIFont boldSystemFontOfSize:17];

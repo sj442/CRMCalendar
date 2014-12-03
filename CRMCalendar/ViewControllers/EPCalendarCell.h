@@ -13,6 +13,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *dotImageView;
 @property (strong, nonatomic) NSDate *indexDate;
+@property (weak, nonatomic) IBOutlet UILabel *dayLabel;
+
+
 
 -(void)configureCell;
 

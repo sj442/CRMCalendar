@@ -41,7 +41,7 @@ NSInteger todayYear;
     self.collectionView.contentSize = CGSizeMake(320*3, 100);
     [self.collectionView setContentInset:UIEdgeInsetsMake(0,320, 0, 320)];
     self.calendar = [NSCalendar currentCalendar];
-    self.date = [NSDate date];
+    self.date = [NSDate createDateFromComponentsYear:2014 andMonth:6 andDay:6 ForCalendar:self.calendar];
     self.eventsDict = [[NSMutableDictionary alloc] init];
     self.today = [NSDate date];
     todayDay = [self.calendar daysInDate:self.today];
@@ -77,10 +77,13 @@ NSInteger todayYear;
     NSInteger index = indexPath.section*7 +indexPath.row +1;
     [cell configureCell];
     if (index<=7) {
+        cell.dayLabel.text = [self dayLabelForWeekday:index];
         [self configureForPreviousWeekModeCell:cell ForIndex:index];
-    } else if (index>=8 && index<=15) {
+    } else if (index>=8 && index<=14) {
+        cell.dayLabel.text = [self dayLabelForWeekday:index-7];
         [self configureForCurrentWeekModeCell:cell ForIndex:index];
     } else {
+        cell.dayLabel.text = [self dayLabelForWeekday:index-14];
         [self configureForNextWeekModeCell:cell ForIndex:index];
     }
     return cell;
@@ -98,6 +101,24 @@ NSInteger todayYear;
     } else {
         return CGSizeMake(CGRectGetWidth(self.view.bounds)/8,(CGRectGetHeight(self.view.bounds)-64)/7);
     }
+}
+
+- (NSString *)dayLabelForWeekday:(NSInteger)weekday
+{
+    if (weekday ==1) {
+        return @"S";
+    } else if (weekday ==2) {
+        return @"M";
+    } else if (weekday ==3) {
+        return @"T";
+    } else if (weekday ==4) {
+        return @"W";
+    } else if (weekday ==5) {
+        return @"T";
+    } else if (weekday ==6) {
+        return @"F";
+    }
+        return @"S";
 }
 
 - (NSArray*)fetchCalendarEventsForDate:(NSDate*)indexDate
@@ -180,9 +201,9 @@ NSInteger todayYear;
     NSInteger year = selfDateYear;
     NSInteger week = weekOfMonth;
     NSDate *firstDayOfNextMonth;
-    NSInteger weeksInNextMonth =0;
+    NSInteger weeksInNextMonth =weeksInMonth;
     
-    if (weekOfMonth ==weeksInMonth) {
+    if (weekOfMonth == weeksInMonth) {
         if (month == 12) {
             year = year+1;
         }
@@ -275,8 +296,8 @@ NSInteger todayYear;
     NSInteger day;
     NSDate *lastDate = [self.calendar lastDayOfTheMonthUsingReferenceDate:date];
     NSInteger lastDay = [self.calendar weekdayInDate:lastDate];
-    NSDate *weekFirstDate = [self.calendar firstDayOfTheWeekUsingReferenceDate:date];
-    NSInteger daysInWeekFirstDate = [self.calendar daysInDate:weekFirstDate];
+    NSDate *firstDayOfLastWeek = [self.calendar firstDayOfTheWeekUsingReferenceDate:lastDate];
+    NSInteger daysInWeekFirstDate = [self.calendar daysInDate:firstDayOfLastWeek];
     if (index<=lastDay){
         day = daysInWeekFirstDate+index-1;
         cell.dateLabel.text = [NSString stringWithFormat:@"%ld", (long)day];
@@ -286,8 +307,17 @@ NSInteger todayYear;
         cell.indexDate = indexDate;
     }
     else {
-        day=0;
-        cell.dateLabel.text = @"";
+        NSInteger month = [self.calendar monthsInDate:lastDate];
+        NSInteger year = [self.calendar yearsInDate:lastDate];
+        NSDate *firstDayOfNextMonth = [NSDate createDateFromComponentsYear:year andMonth:month+1 andDay:1 ForCalendar:self.calendar];
+        NSDate *lastDayOfFirstWeek = [self.calendar lastDayOfTheWeekUsingReferenceDate:firstDayOfNextMonth];
+        NSInteger daysInFirstDayOfLastWeek = [self.calendar weekdayInDate:lastDayOfFirstWeek];
+        NSDate *date = [NSDate createDateFromComponentsYear:year andMonth:month andDay:1+daysInFirstDayOfLastWeek-index ForCalendar:self.calendar];
+        day= [self.calendar daysInDate:date];
+        cell.dateLabel.text = [NSString stringWithFormat:@"%ld", (long)day];
+        NSDate *indexDate = [NSDate createDateFromComponentsYear:year andMonth:month andDay:day ForCalendar:self.calendar];
+        cell.indexDate = indexDate;
+
     }
     return day;
 }
